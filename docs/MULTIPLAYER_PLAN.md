@@ -9,7 +9,7 @@ Complementa `MULTIPLAYER_FEASIBILITY.md`. **[F]** = feito e testado; **[H]** = h
 | M0 | Protocolo + simulação autoritativa headless | `survivors-net`, `survivors-server::sim`; testes de determinismo, clamp de input, escala por nº de jogadores | **[F] feito** |
 | M1 | Servidor WS de uma sala (2 jogadores) | `/ws`, Join/versão, Welcome, snapshots 20 Hz, sala cheia recusada, saída de jogador; teste E2E com 2 clientes reais | **[F] feito** |
 | M2 | Cliente headless de medição | Bot que mede banda/latência com 220 inimigos e RTT simulado (critérios 1–2 do experimento) | próximo |
-| M3 | Cliente wasm em modo `online` | Conectar via `?server=ws://…`; spawnar heróis/inimigos remotos com `units.rs` a partir de snapshots; interpolação ~100 ms; predição do herói local | próximo (maior risco) |
+| M3 | Cliente wasm em modo `online` (`survivors/online.rs`, `?survivors_server=ws://…`): snapshots → unidades remotas interpoladas, predição + reconciliação do herói local, eventos → VFX. **[F] compila em wasm32; [H] não executado** (faltam os dados do WoW neste ambiente) | feito, falta validar no navegador |
 | M4 | PoC fechado | 2 navegadores se veem, lutam contra a mesma horda, 1 habilidade com VFX por evento | — |
 | M5 | Extrair lógica real | `data.rs` → crate compartilhada; habilidades/inimigos reais no servidor; `Hit.source` | MVP |
 | M6 | Salas | Código de convite, lista pública, `max_players` 2–4, lobby/início/fim de partida | MVP |
