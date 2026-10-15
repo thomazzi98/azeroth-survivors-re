@@ -1,0 +1,19 @@
+[package]
+name = "survivors-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Authoritative game server for online Azeroth Survivors (2-player PoC)"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+survivors-net = { path = "../survivors-net" }
+axum = { version = "0.8", features = ["ws"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "sync", "time"] }
+futures-util = { version = "0.3", default-features = false, features = ["sink", "std"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+[dev-dependencies]
+tokio-tungstenite = "0.30"

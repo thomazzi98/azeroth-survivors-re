@@ -1,0 +1,10 @@
+[package]
+name = "survivors-net"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Wire protocol between the Azeroth Survivors online client and survivors-server (PoC)"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+postcard = { version = "1", default-features = false, features = ["use-std"] }
