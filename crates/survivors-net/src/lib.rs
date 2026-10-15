@@ -5,6 +5,8 @@
 //! PoC scope: join, input, snapshots. Cards, rooms and bosses come in later phases
 //! (docs/MULTIPLAYER_PLAN.md).
 
+pub mod client;
+
 use serde::{Deserialize, Serialize};
 
 /// Bumped on any incompatible change; the server refuses a mismatched `Join`.

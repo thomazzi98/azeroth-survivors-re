@@ -25,6 +25,7 @@ webgpu = ["bevy/webgpu", "benilla-world/webgpu"]
 # Wall-clock reads (`SystemTime::now`) go through `web-time`: a re-export of std's on native, and
 # `Date.now()` in a browser, where std's panics on first use.
 web-time = "1"
+survivors-net = { path = "../survivors-net" }
 anyhow.workspace = true
 benilla-ui = { path = "../benilla-ui" }
 bevy.workspace = true
@@ -128,6 +129,10 @@ cpal = { version = "0.17", features = ["wasm-bindgen"] }
 # fetches over `fetch` and decodes through `OfflineAudioContext::decodeAudioData`, both off the
 # main thread, because doing either on it froze the frame at every zone line and doorway.
 web-sys = { version = "0.3", features = [
+    "BinaryType",
+    "CloseEvent",
+    "MessageEvent",
+    "WebSocket",
     "AbortController",
     "AbortSignal",
     "RequestInit",

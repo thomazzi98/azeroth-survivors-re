@@ -15,6 +15,7 @@ mod hud;
 mod menu;
 mod minimap;
 mod mobility;
+mod online;
 mod units;
 
 use benilla_world::schedule::WorldStage;
@@ -76,12 +77,21 @@ impl Plugin for SurvivorsPlugin {
                     enemies::tick_marks,
                     enemies::drop_loot,
                     enemies::collect_gems,
-                    hero::hero_vitals,
                 )
                     .chain()
                     .after(WorldStage::Input)
                     .run_if(in_state(Phase::Playing))
+                    // Online, the server owns the horde, the spells and the damage.
+                    .run_if(online::offline)
                     // Entering a battleground raises its loading screen: the run waits behind it.
+                    .run_if(|l: Res<crate::loading_screen::LoadingScreen>| !l.covering()),
+            )
+            .add_systems(
+                Update,
+                hero::hero_vitals
+                    .after(enemies::collect_gems)
+                    .after(WorldStage::Input)
+                    .run_if(in_state(Phase::Playing))
                     .run_if(|l: Res<crate::loading_screen::LoadingScreen>| !l.covering()),
             )
             .add_systems(
@@ -133,6 +143,9 @@ impl Plugin for SurvivorsPlugin {
             .add_systems(OnEnter(Phase::Paused), pause)
             .add_systems(OnEnter(Phase::GameOver), unpause)
             .add_systems(OnEnter(Phase::Menu), (unpause, reset_run));
+        if let Some(url) = online::server_url() {
+            online::plugin(app, url);
+        }
         if let Some(auto) = auto::from_env() {
             app.insert_resource(auto)
                 .add_systems(
